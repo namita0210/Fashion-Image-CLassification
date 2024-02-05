@@ -21,4 +21,35 @@
     So, the transform argument converts the input image data to a pytorch tensor which can be fed to a neural network as an input.   
 
 3. We pass the 'Dataset' as an argument to the 'DataLoader'.
-This wraps an interable over our dataset and supports sampling, shuffling, automatic batching etc.     
+This wraps an interable over our dataset and supports sampling, shuffling, automatic batching etc. 
+
+4. Creating dataloaers for the train and test data we will find that our input tensor has 4 dimensions
+    Batch size , Channels , Height, Width (Since it is an image tensor).
+
+5. In pytorch there is a base class for all neural networks called Module.
+    Whatever model you might create must be a subclass of this class -> nn.Module
+
+    - __init__(self) : The constructor of this class will have
+        super.__init__() --> which will call the constructor of parent class nn.Module
+
+    - Next step involves the flatten Module
+    A neural network expects a 1D array like input but our tensor has 4D representation 
+    (batch size, channel , height , width) so flatten module will convert the tensor to required format which the neural network ca understand.    
+    but in the constructor the flatten module is just declared - not used.
+
+    - Obvious question is that why is it declared if it is not used right now? Because when different instances of this
+    class will be created they will have the flatten module also initialized by default which is quite
+    necessary since neural networks only take 1D vector size inputs so - flatten module will always be required.
+
+    - The forward ( ) method : This will take the tensor of the image as an input through its argument. 
+    The real flattening operation will take place here on the input tensor x which will then be passed 
+    to the neural network stored within the variable ```logits```.
+
+    - In the constructor within nn.Sequqntial where the neural network architecture is defined 
+    nn.Linear takes an input 28 * 28 referring that the height and width of the input image is 28*28 pixels and the output should be 512 pixels.
+
+    -- nn.Linear can also be called a fully connected layer which means a layer which connects one neuron to all other neurons in the next layer.
+
+    -- Then each fully connected layer is followed by an activation fuction to introduce non-linearity
+
+    -- Finally, the last linear layer returns the output 10 -> which is the number of classes among which we are supposed to classify the input image .
