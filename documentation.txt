@@ -1,0 +1,24 @@
+1. In pytorch there are 2 options to work with data - 
+    1.1 DataLoader
+    Dataloader represents a python interable over a dataset with support for map style and iterable style datasets.
+    - In map style datasets the omputer can learn from a card set with the help of a guide ( class) and randomly access any of the
+    cards from the deck.
+    - In the iterable style the computer has to follow a sequence in picking up each card like a line ( in an iterative fashion) - 
+    Reads are expensive.
+
+    1.2 Dataset
+    A Dataset in PyTorch is like a collection of data samples. Each sample typically consists of an input (like an image or some other 
+    data) and its corresponding label (the output or the expected result).
+    The Dataset class is an abstraction that you can use to represent your data in a way that PyTorch understands.
+     It allows you to access individual samples and their labels.
+     
+     
+    In summary, Dataset stores your data samples and labels, and DataLoader helps you manage and iterate through the
+    dataset efficiently by providing batches of data during training
+
+2. Every torch vision dataset includes 2 arguments : transform and target transform.
+    2.1 Transform : The data that we are working with is image data, which can not be directly fed to a neural network.
+    So, the transform argument converts the input image data to a pytorch tensor which can be fed to a neural network as an input.   
+
+3. We pass the 'Dataset' as an argument to the 'DataLoader'.
+This wraps an interable over our dataset and supports sampling, shuffling, automatic batching etc.     
