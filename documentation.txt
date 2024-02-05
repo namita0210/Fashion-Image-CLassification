@@ -53,3 +53,50 @@ This wraps an interable over our dataset and supports sampling, shuffling, autom
     -- Then each fully connected layer is followed by an activation fuction to introduce non-linearity
 
     -- Finally, the last linear layer returns the output 10 -> which is the number of classes among which we are supposed to classify the input image .
+
+6. Loss Function
+    We have used the CrossEntropyLoss( ) which is commonly used loss fuction in classification tasks.
+    specially where there are multiple classes.
+
+    It is often employed in combination with softmax activation and negative log - likelihood loss.
+
+    6.1 Sotmax Activation :
+        - It is applied to the raw output logits of the network to convert
+        them into class probabilities. This ensures that the output is a probability distribution over the classes.
+
+    6.2 Negative Log Likelihood Loss : 
+        - Negative log likelihood loss measures the difference between the
+         predicted class probabilities and the true distribution.    
+
+    6.3 Input and target
+        - Input to CrossEntropyLoss is the raw output logits from the neural network and the target labels.
+
+        - Target labels should be provided as class indices.  
+
+7.  In a single training loop the model maked predictions on the training dataset ( fed to it in batches)
+    and backpropagates the prediction error to adjust the model's parameters.
+
+8. train function : 
+    - size captures the # of samples 
+    - model.train ( ) specifies the training mode has begun
+    - Itrate over batches in the Dataloader
+    - Move the data from dataloader to the specified device
+    - model(X) computes the predictions of the model on the input data
+    - loss_fn(pred,y) calculates loss between pred values and true labels
+    - loss.backward( ) --> computes the gradients of the model parameters wrt the loss
+    - optimizer.step() updates model parameters based on the computed gradients
+    - optimizer.zero_grad() clears gradients to prepare for the next iteration
+    - bath % 100 == 0 block prints training loss and current progress every 100 batches
+    - batch + 1* len(X) calculates the # of processed samples
+This function is responsible for a single iteration of training on a batch of data.
+It performs forward and backward passes, updates the model parameters, and prints the training loss and progress.
+
+9. Test function : 
+    - size is set to the total # of samples in the test dataset
+    - num_batches is the total # of batches in the test dataloader
+    - model.eval() sets the model to evaluation mode {This is necessary because models like dropout or batch normalization behave differently during training and evaluation}
+    - test_loss and correct are used to accumulate total test loss and count the # of correctly classified samples
+    - torch.no_grad() temporarily disables gradient computation during the evaluation to save memory and speed up the process
+    - Divide the accumulated test loss by the# of batches to get the average test loss
+The test function evaluates the model on the test dataset, providing information about accuracy
+and average loss.
