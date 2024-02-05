@@ -100,3 +100,28 @@ It performs forward and backward passes, updates the model parameters, and print
     - Divide the accumulated test loss by the# of batches to get the average test loss
 The test function evaluates the model on the test dataset, providing information about accuracy
 and average loss.
+
+10. Analyzing the data
+    - torch.randint- > generates a random tensor
+    it has the upperbound = length of the training_data
+    the size of output tensor is set to 1D
+    .item() method extracts single random integer as a python scalar (not as tensor)
+    - Retrieve the image and label according to the random index
+
+11. Evaluate a trained and loaded neural network on a single test sample
+    - Set model to evaluation mode
+    - Retrieve test sample x and its ocrresponding label y from the test dataset
+    - Temporarily disable gradient computation since this is inference step
+    - move the input data to the device to ensure consistency with the device on which the model is located
+    - get prediction
+    - argmax(0) finds the index of the maximum value along the specified axis
+    This gives index of the class with the highest predicted probability.
+    classes[pred[0].argmax(0)] --> gives the corresponding class label
+
+ INFERENCE :
+ Refers to the proces sof using a trained model to make predictions based on new or unseen data.
+ During inference predictions are generated without updating the parameters
+ which makes it differ from the training stage
+ Gradient is also not calculated ( obviously - parameter is not updating so what are we going to do with the gradient)
+
+
